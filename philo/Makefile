@@ -16,7 +16,7 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 %.o:%.c
-	$(CC) $(CFLAGS) $< -c $@
+	$(CC) $(CFLAGS) -c $<  -o $@
 
 clean:
 	$(RM) $(OBJ)

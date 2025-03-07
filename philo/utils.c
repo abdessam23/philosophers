@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:17:06 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/06 15:11:43 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/07 15:56:01 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int ft_atoi(char *str)
             ft_error("Should enter number as unsigned integer from 0 to INT_MAX");
         i++;
     }
-    if ((str[i] < '0' || str[i] > '9') && str[i] != '\0')
-        ft_error("Should enter only digits");
+    if ((str[i] < '0' || str[i] > '9') && str[i] != '\0' && str[i] != ' ')
+       ft_error("Should enter only digits");
     return (result);
 }
-int strcmp(char *s1, char *s2)
+int ft_strcmp(char *s1, char *s2)
 {
     int i;
     
@@ -60,19 +60,18 @@ int strcmp(char *s1, char *s2)
         i++;
     return (s1[i] - s2[i]);
 }
-void    ft_print(philo_t *philo, char *str)
+
+void ft_error(char *str)
 {
-    int t;
-    t = get_time() - philo->data->s_time;
-    pthread_mutex_lock(&philo->data->print);
-    if (!philo->data->died && !philo->data->m_eaten)
+    printf("%s\n", str);
+    exit(1);
+}
+void is_valid(char **str)
+{
+    int i = 1;
+    while(str[i])
     {
-        printf("%d %d %s", t, philo->id, str);
-        //printf("%1d ", philo->id);
-        //printf("%s", str);
-        if (strcmp(str, "is eating") == 0)
-           printf(" (Meal #%d)", philo->c_eat);
-        printf("\n");
+        ft_atoi(str[i]);
+        i++;
     }
-    pthread_mutex_unlock(&philo->data->print);
 }

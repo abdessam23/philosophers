@@ -37,10 +37,14 @@ typedef struct s_table
     pthread_mutex_t check;
     pthread_mutex_t print;
 } t_table;
+
 int     ft_atoi(char *str);
-void    ft_error(char *str);
-void    *routine(void *arg);
 size_t  get_time();
+void    ft_error(char *str);
+int     ft_strcmp(char *s1, char *s2);
+void    *routine(void *arg);
+void    is_valid(char **str);
+void    init_table(t_table *tab);
 void    ft_init(t_table *p,int ac, char **argv);
 void    check_dead(t_table *tab);
 void    ft_sleep(t_table *tab ,int ts);

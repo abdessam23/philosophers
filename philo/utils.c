@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 14:17:06 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/03 09:32:28 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/06 15:11:43 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 size_t get_time()
 {
     struct timeval t;
+    
     gettimeofday(&t,NULL);
     return((t.tv_sec * 1000) + (t.tv_usec / 1000));
 }
@@ -45,4 +46,33 @@ int ft_atoi(char *str)
     if ((str[i] < '0' || str[i] > '9') && str[i] != '\0')
         ft_error("Should enter only digits");
     return (result);
+}
+int strcmp(char *s1, char *s2)
+{
+    int i;
+    
+    i = 0;
+    if (!s1 && !s2)
+        return (0);
+    if (!s1 || !s2)
+        return (-1);
+    while(s1[i] && s2[i] && s1[i] == s2[i])
+        i++;
+    return (s1[i] - s2[i]);
+}
+void    ft_print(philo_t *philo, char *str)
+{
+    int t;
+    t = get_time() - philo->data->s_time;
+    pthread_mutex_lock(&philo->data->print);
+    if (!philo->data->died && !philo->data->m_eaten)
+    {
+        printf("%d %d %s", t, philo->id, str);
+        //printf("%1d ", philo->id);
+        //printf("%s", str);
+        if (strcmp(str, "is eating") == 0)
+           printf(" (Meal #%d)", philo->c_eat);
+        printf("\n");
+    }
+    pthread_mutex_unlock(&philo->data->print);
 }

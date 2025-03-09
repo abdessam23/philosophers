@@ -6,11 +6,30 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:42:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/09 14:46:57 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/09 16:19:28 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+void    exit_philo(t_table *tab)
+{
+    int i;
+
+    i = -1;
+    while (++i < tab->n_ph)
+    {
+        waitpid(-1, NULL, 1);
+        kill()
+    }
+    sem_close("/sem_check");
+	sem_close("/sem_print");
+	sem_close("/sem_forks");
+    sem_unlink("/sem_check");
+	sem_unlink("/sem_print");
+	sem_unlink("/sem_forks");
+    free(tab->philos);
+}
 
 void	ft_sleep(t_table *tab, int ts)
 {

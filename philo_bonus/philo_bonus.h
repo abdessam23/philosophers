@@ -6,13 +6,14 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:30:12 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/08 17:26:26 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/09 15:52:54 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
 
+# include <semaphore.h>
 # include <limits.h>
 # include <pthread.h>
 # include <stdio.h>
@@ -26,11 +27,11 @@ typedef struct s_philo
 	int				id;
 	int				c_eat;
 	size_t			last_eat;
-	pthread_mutex_t	fork;
+	pthread_t check_die;
 	struct s_table	*data;
 	struct s_philo	*r_phi;
 	struct s_philo	*l_phi;
-
+	pid_t			pid;
 }					t_philo;
 
 typedef struct s_table
@@ -45,8 +46,9 @@ typedef struct s_table
 	int				died;
 	size_t			s_time;
 	t_philo			*philos;
-	pthread_mutex_t	check;
-	pthread_mutex_t	print;
+	sem_t			*check;
+	sem_t			*print;
+	sem_t			*forks;
 }					t_table;
 
 int					ft_atoi(char *str);
@@ -56,3 +58,4 @@ int					ft_strcmp(char *s1, char *s2);
 void				is_valid(char **str);
 void				init_table(t_table *tab);
 void				ft_init(t_table *p, int ac, char **argv);
+void				*philo_life(void *arg);

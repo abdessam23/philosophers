@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:42:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/09 16:19:28 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 10:53:22 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,19 @@
 void    exit_philo(t_table *tab)
 {
     int i;
+	int	status;
 
     i = -1;
     while (++i < tab->n_ph)
     {
-        waitpid(-1, NULL, 1);
-        kill()
+        waitpid(-1, &status, 1);
+		if (WEXITSTATUS(status) == 1)
+		{
+			i = -1;
+			while(++i < tab->n_ph)
+        		kill(tab->philos[i].pid, SIGTERM);
+			break;
+		}
     }
     sem_close("/sem_check");
 	sem_close("/sem_print");

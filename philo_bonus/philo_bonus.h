@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:30:12 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/09 16:15:49 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 12:18:16 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <signal.h>
 
 
 typedef struct s_philo
@@ -53,10 +55,16 @@ typedef struct s_table
 }					t_table;
 
 int					ft_atoi(char *str);
+int					ft_strcmp(char *s1, char *s2);
 size_t				get_time(void);
 void				ft_error(char *str);
-int					ft_strcmp(char *s1, char *s2);
+void				ft_sleep(t_table *tab, int ts);
+void				ft_print(t_philo *philo, char *str);
+void    			*check_dead(void *arg);
 void				is_valid(char **str);
 void				init_table(t_table *tab);
 void				ft_init(t_table *p, int ac, char **argv);
 void				*philo_life(void *arg);
+void    			exit_philo(t_table *tab);
+
+#endif

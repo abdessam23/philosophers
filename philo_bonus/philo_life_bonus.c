@@ -1,44 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_life.c                                       :+:      :+:    :+:   */
+/*   philo_life_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:02:19 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/09 15:55:23 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 12:17:06 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-void	check_dead(t_table *tab)
+void	*check_dead(void *arg)
 {
-	int	i;
-
-	while (!tab->m_eaten)
-	{
-		i = -1;
-		while (!tab->died && ++i < tab->n_ph)
+	t_philo *philo;
+	t_table *tab;
+	
+	philo = (void *)arg;
+	tab = philo->data;
+	while (1)
 		{
-			sem_wait(&tab->check);
-			if (get_time() - tab->philos[i].last_eat > (size_t)tab->td)
+			sem_wait(tab->check);
+			if (get_time() - philo->last_eat > (size_t)tab->td)
 			{
-				ft_print(&tab->philos[i], "died");
+				ft_print(philo, "died");
+				sem_wait(tab->check);
 				tab->died = 1;
+				exit (1);
 			}
-			sem_post(&tab->check);
-			usleep(100);
-		}
+		
+		sem_post(tab->check);
 		if (tab->died)
 			break ;
-		i = 0;
-		while (tab->nt != -1 && i < tab->n_ph
-			&& tab->philos[i].c_eat >= tab->nt)
-			i++;
-		if (i == tab->n_ph)
-			tab->m_eaten = 1;
-	}
+		usleep(1000);
+		if (tab->nt != -1 && philo->c_eat >= tab->nt)
+			break ;
+		}
+		return (NULL);
 }
 
 void	ft_eat(t_philo *philo)
@@ -46,26 +45,26 @@ void	ft_eat(t_philo *philo)
 	t_table	*tab;
 
 	tab = philo->data;
-	sem_wait(&philo->fork);
+	sem_wait(philo->data->forks);
 	ft_print(philo, "has taking fork");
 	if (philo->data->n_ph == 1)
 	{
 		ft_sleep(tab, tab->td);
 		ft_print(philo, "died");
-		sem_post(&philo->fork);
+		sem_post(philo->data->forks);
 		tab->died = 1;
 		return ;
 	}
-	sem_wait(&philo->r_phi->fork);
+	sem_wait(philo->data->forks);
 	ft_print(philo, "has taking fork");
-	sem_wait(&tab->check);
+	sem_wait(tab->check);
 	philo->c_eat++;
 	ft_print(philo, "is eating");
 	philo->last_eat = get_time();
-	sem_post(&tab->check);
+	sem_post(tab->check);
 	ft_sleep(tab, tab->te);
-	sem_post(&philo->r_phi->fork);
-	sem_post(&philo->fork);
+	sem_post(philo->data->forks);
+	sem_post(philo->data->forks);
 }
 
 void	*philo_life(void *arg)

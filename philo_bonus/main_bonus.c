@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:25:10 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/09 15:37:21 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 11:19:25 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ int main(int ac , char **argv)
 	int	i;
 	t_table tab;
 	
-	int i = -1;
+	i = -1;
     if (ac == 5 || ac == 6)
 	{
 		isvalid_init(&tab, ac, argv);
 		while (++i < tab.n_ph)
 		{
 			tab.philos[i].pid = fork();
-			if (tab.philosp[i].pid == -1)
+			if (tab.philos[i].pid == -1)
 				ft_error("Error : fork failed.");
 			if (tab.philos[i].pid == 0)
 				philo_life((void *)&tab.philos[i]);

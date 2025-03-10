@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:25:10 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 11:19:25 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 14:03:19 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	init_semaphores(t_table *tab)
 	sem_unlink("/sem_check");
 	sem_unlink("/sem_print");
 	sem_unlink("/sem_forks");
-	if(tab->forks == SEM_FAILED || tab->print == SEM_FAILED || tab->check == SEM_FAILED)
+	if (tab->forks == SEM_FAILED || tab->print == SEM_FAILED
+		|| tab->check == SEM_FAILED)
 		ft_error("Error: sem_open failed.");
 }
 
@@ -47,13 +48,13 @@ static void	isvalid_init(t_table *tab, int ac, char **argv)
 	ft_init(tab, ac, argv);
 }
 
-int main(int ac , char **argv)
+int	main(int ac, char **argv)
 {
-	int	i;
-	t_table tab;
-	
+	int		i;
+	t_table	tab;
+
 	i = -1;
-    if (ac == 5 || ac == 6)
+	if (ac == 5 || ac == 6)
 	{
 		isvalid_init(&tab, ac, argv);
 		while (++i < tab.n_ph)

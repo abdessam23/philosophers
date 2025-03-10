@@ -6,31 +6,30 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:30:12 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 12:18:16 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 14:05:42 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
 
-# include <semaphore.h>
+# include <fcntl.h>
 # include <limits.h>
 # include <pthread.h>
+# include <semaphore.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
-# include <fcntl.h>
 # include <sys/time.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include <signal.h>
-
 
 typedef struct s_philo
 {
 	int				id;
 	int				c_eat;
 	size_t			last_eat;
-	pthread_t check_die;
+	pthread_t		check_die;
 	struct s_table	*data;
 	struct s_philo	*r_phi;
 	struct s_philo	*l_phi;
@@ -60,11 +59,11 @@ size_t				get_time(void);
 void				ft_error(char *str);
 void				ft_sleep(t_table *tab, int ts);
 void				ft_print(t_philo *philo, char *str);
-void    			*check_dead(void *arg);
+void				*check_dead(void *arg);
 void				is_valid(char **str);
 void				init_table(t_table *tab);
 void				ft_init(t_table *p, int ac, char **argv);
 void				*philo_life(void *arg);
-void    			exit_philo(t_table *tab);
+void				exit_philo(t_table *tab);
 
 #endif

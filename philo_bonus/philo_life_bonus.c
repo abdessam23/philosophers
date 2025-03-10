@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:02:19 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 12:17:06 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 14:07:00 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,29 @@
 
 void	*check_dead(void *arg)
 {
-	t_philo *philo;
-	t_table *tab;
-	
+	t_philo	*philo;
+	t_table	*tab;
+
 	philo = (void *)arg;
 	tab = philo->data;
 	while (1)
+	{
+		sem_wait(tab->check);
+		if (get_time() - philo->last_eat > (size_t)tab->td)
 		{
+			ft_print(philo, "died");
 			sem_wait(tab->check);
-			if (get_time() - philo->last_eat > (size_t)tab->td)
-			{
-				ft_print(philo, "died");
-				sem_wait(tab->check);
-				tab->died = 1;
-				exit (1);
-			}
-		
+			tab->died = 1;
+			exit(1);
+		}
 		sem_post(tab->check);
 		if (tab->died)
 			break ;
 		usleep(1000);
 		if (tab->nt != -1 && philo->c_eat >= tab->nt)
 			break ;
-		}
-		return (NULL);
+	}
+	return (NULL);
 }
 
 void	ft_eat(t_philo *philo)
@@ -74,8 +73,8 @@ void	*philo_life(void *arg)
 
 	philo = (t_philo *)arg;
 	tab = philo->data;
-    philo->last_eat = tab->s_time;
-    pthread_create(&philo->check_die, NULL, check_dead, (void *) philo);
+	philo->last_eat = tab->s_time;
+	pthread_create(&philo->check_die, NULL, check_dead, (void *)philo);
 	if (philo->id % 2 == 0)
 		usleep(1000);
 	while (!tab->died && !tab->m_eaten)
@@ -85,6 +84,6 @@ void	*philo_life(void *arg)
 		ft_sleep(tab, tab->ts);
 		ft_print(philo, "is thinking");
 	}
-    pthread_join(philo->check_die, NULL);
+	pthread_join(philo->check_die, NULL);
 	exit(1);
 }

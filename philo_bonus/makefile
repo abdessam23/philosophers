@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra -Wextra -pthread
 
 RM = rm -rf
 
-SRC = main_bonus.c philo_life_bonus.c utils_bonus.c phi_utils_bonus.c
+SRC = main_bonus.c philo_life_bonus.c utils_bonus.c phi_utlis_bonus.c
 
 OBJ = $(SRC:.c=.o)
 

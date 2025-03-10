@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo_utlis.c                                      :+:      :+:    :+:   */
+/*   phi_utlis_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:42:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 10:53:22 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 13:24:23 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void    exit_philo(t_table *tab)
 			break;
 		}
     }
-    sem_close("/sem_check");
-	sem_close("/sem_print");
-	sem_close("/sem_forks");
+    sem_close(tab->print);
+	sem_close(tab->check);
+	sem_close(tab->forks);
     sem_unlink("/sem_check");
 	sem_unlink("/sem_print");
 	sem_unlink("/sem_forks");

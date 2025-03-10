@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:02:19 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 14:07:00 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 15:12:55 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ void	*check_dead(void *arg)
 	t_philo	*philo;
 	t_table	*tab;
 
-	philo = (void *)arg;
+	philo = (t_philo *)arg;
 	tab = philo->data;
 	while (1)
 	{
 		sem_wait(tab->check);
 		if (get_time() - philo->last_eat > (size_t)tab->td)
 		{
-			ft_print(philo, "died");
-			sem_wait(tab->check);
+			ft_print(philo, "died1");
+			sem_wait(tab->print);
 			tab->died = 1;
 			exit(1);
 		}
@@ -49,18 +49,17 @@ void	ft_eat(t_philo *philo)
 	if (philo->data->n_ph == 1)
 	{
 		ft_sleep(tab, tab->td);
-		ft_print(philo, "died");
-		sem_post(philo->data->forks);
+		ft_print(philo, "died2");
 		tab->died = 1;
 		return ;
 	}
 	sem_wait(philo->data->forks);
 	ft_print(philo, "has taking fork");
-	sem_wait(tab->check);
+	sem_wait(philo->data->check);
 	philo->c_eat++;
 	ft_print(philo, "is eating");
 	philo->last_eat = get_time();
-	sem_post(tab->check);
+	sem_post(philo->data->check);
 	ft_sleep(tab, tab->te);
 	sem_post(philo->data->forks);
 	sem_post(philo->data->forks);
@@ -80,6 +79,8 @@ void	*philo_life(void *arg)
 	while (!tab->died && !tab->m_eaten)
 	{
 		ft_eat(philo);
+		if (tab->nt != -1 && philo->c_eat >= tab->nt)
+			break ;
 		ft_print(philo, "is sleeping");
 		ft_sleep(tab, tab->ts);
 		ft_print(philo, "is thinking");

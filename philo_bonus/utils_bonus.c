@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:41:43 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 13:57:42 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 14:44:36 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,4 @@ void	ft_error(char *str)
 {
 	printf("%s\n", str);
 	exit(1);
-}
-
-void	is_valid(char **str)
-{
-	int	i;
-
-	i = 1;
-	while (str[i])
-	{
-		ft_atoi(str[i]);
-		i++;
-	}
 }

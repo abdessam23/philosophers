@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:25:10 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 14:03:19 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 15:37:52 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,6 @@ void	ft_init(t_table *p, int ac, char **argv)
 	init_semaphores(p);
 }
 
-static void	isvalid_init(t_table *tab, int ac, char **argv)
-{
-	is_valid(argv);
-	tab->s_time = get_time();
-	ft_init(tab, ac, argv);
-}
-
 int	main(int ac, char **argv)
 {
 	int		i;
@@ -56,7 +49,8 @@ int	main(int ac, char **argv)
 	i = -1;
 	if (ac == 5 || ac == 6)
 	{
-		isvalid_init(&tab, ac, argv);
+		tab.s_time = get_time();
+		ft_init(&tab, ac, argv);
 		while (++i < tab.n_ph)
 		{
 			tab.philos[i].pid = fork();

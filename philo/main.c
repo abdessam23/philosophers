@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:24:50 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/08 10:27:09 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 14:43:14 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	ft_init(t_table *p, int ac, char **argv)
 
 static void	isvalid_init(t_table *tab, int ac, char **argv)
 {
-	is_valid(argv);
 	tab->s_time = get_time();
 	ft_init(tab, ac, argv);
 }

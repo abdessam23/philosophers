@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:30:12 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 14:05:42 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/10 14:42:27 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void				ft_error(char *str);
 void				ft_sleep(t_table *tab, int ts);
 void				ft_print(t_philo *philo, char *str);
 void				*check_dead(void *arg);
-void				is_valid(char **str);
 void				init_table(t_table *tab);
 void				ft_init(t_table *p, int ac, char **argv);
 void				*philo_life(void *arg);

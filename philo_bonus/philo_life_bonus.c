@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 15:02:19 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 15:12:55 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/11 15:59:56 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void	*check_dead(void *arg)
 	t_table	*tab;
 
 	philo = (t_philo *)arg;
-	tab = philo->data;
+	tab = philo->tab;
 	while (1)
 	{
 		sem_wait(tab->check);
 		if (get_time() - philo->last_eat > (size_t)tab->td)
 		{
-			ft_print(philo, "died1");
+			ft_print(philo, "died");
 			sem_wait(tab->print);
 			tab->died = 1;
 			exit(1);
@@ -43,26 +43,26 @@ void	ft_eat(t_philo *philo)
 {
 	t_table	*tab;
 
-	tab = philo->data;
-	sem_wait(philo->data->forks);
+	tab = philo->tab;
+	sem_wait(philo->tab->forks);
 	ft_print(philo, "has taking fork");
-	if (philo->data->n_ph == 1)
+	if (philo->tab->n_ph == 1)
 	{
 		ft_sleep(tab, tab->td);
-		ft_print(philo, "died2");
+		ft_print(philo, "died");
 		tab->died = 1;
 		return ;
 	}
-	sem_wait(philo->data->forks);
+	sem_wait(philo->tab->forks);
 	ft_print(philo, "has taking fork");
-	sem_wait(philo->data->check);
+	sem_wait(philo->tab->check);
 	philo->c_eat++;
 	ft_print(philo, "is eating");
 	philo->last_eat = get_time();
-	sem_post(philo->data->check);
+	sem_post(philo->tab->check);
 	ft_sleep(tab, tab->te);
-	sem_post(philo->data->forks);
-	sem_post(philo->data->forks);
+	sem_post(philo->tab->forks);
+	sem_post(philo->tab->forks);
 }
 
 void	*philo_life(void *arg)
@@ -71,12 +71,12 @@ void	*philo_life(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	tab = philo->data;
+	tab = philo->tab;
 	philo->last_eat = tab->s_time;
 	pthread_create(&philo->check_die, NULL, check_dead, (void *)philo);
 	if (philo->id % 2 == 0)
 		usleep(1000);
-	while (!tab->died && !tab->m_eaten)
+	while (!tab->died)
 	{
 		ft_eat(philo);
 		if (tab->nt != -1 && philo->c_eat >= tab->nt)

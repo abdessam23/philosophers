@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:25:10 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 15:37:52 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/11 13:16:27 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	init_semaphores(t_table *tab)
 {
-	sem_unlink("/sem_check");
 	sem_unlink("/sem_print");
+	sem_unlink("/sem_check");
 	sem_unlink("/sem_forks");
-	tab->forks = sem_open("/sem_forks", O_CREAT, 0644, 1);
 	tab->print = sem_open("/sem_print", O_CREAT, 0644, 1);
-	tab->check = sem_open("/sem_check", O_CREAT, 0644, tab->n_ph);
-	sem_unlink("/sem_check");
+	tab->check = sem_open("/sem_check", O_CREAT, 0644, 1);
+	tab->forks = sem_open("/sem_forks", O_CREAT, 0644, tab->n_ph);
 	sem_unlink("/sem_print");
+	sem_unlink("/sem_check");
 	sem_unlink("/sem_forks");
 	if (tab->forks == SEM_FAILED || tab->print == SEM_FAILED
 		|| tab->check == SEM_FAILED)

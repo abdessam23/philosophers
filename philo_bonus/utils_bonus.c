@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:41:43 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 14:44:36 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/11 11:56:04 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,17 @@ void	ft_error(char *str)
 {
 	printf("%s\n", str);
 	exit(1);
+}
+void	ft_putstr_fd(char *s, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return ;
+	while (s[i])
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
 }

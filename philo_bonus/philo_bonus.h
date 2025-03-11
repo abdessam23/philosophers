@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/08 13:30:12 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 14:42:27 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/11 11:56:18 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_philo
 	int				c_eat;
 	size_t			last_eat;
 	pthread_t		check_die;
-	struct s_table	*data;
+	struct s_table	*tab;
 	struct s_philo	*r_phi;
 	struct s_philo	*l_phi;
 	pid_t			pid;

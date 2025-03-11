@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:42:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/10 14:04:30 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/11 15:57:47 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,12 @@ void	exit_philo(t_table *tab)
 	int	i;
 	int	status;
 
+	if (!tab || !tab->philos)
+		return ;
 	i = -1;
 	while (++i < tab->n_ph)
 	{
-		waitpid(-1, &status, 1);
+		waitpid(-1, &status, 0);
 		if (WEXITSTATUS(status) == 1)
 		{
 			i = -1;
@@ -32,8 +34,8 @@ void	exit_philo(t_table *tab)
 	sem_close(tab->print);
 	sem_close(tab->check);
 	sem_close(tab->forks);
-	sem_unlink("/sem_check");
 	sem_unlink("/sem_print");
+	sem_unlink("/sem_check");
 	sem_unlink("/sem_forks");
 	free(tab->philos);
 }
@@ -43,7 +45,7 @@ void	ft_sleep(t_table *tab, int ts)
 	size_t	t;
 
 	t = get_time();
-	while (!tab->died)
+	while (!(tab->died))
 	{
 		if (get_time() - t >= (size_t)ts)
 			break ;
@@ -55,16 +57,16 @@ void	ft_print(t_philo *philo, char *str)
 {
 	int	t;
 
-	t = get_time() - philo->data->s_time;
-	sem_wait(philo->data->print);
-	if (!philo->data->died && !philo->data->m_eaten)
+	t = get_time() - philo->tab->s_time;
+	sem_wait(philo->tab->print);
+	if (!philo->tab->died && !philo->tab->m_eaten)
 	{
 		printf("%d %d %s", t, philo->id, str);
 		if (ft_strcmp(str, "is eating") == 0)
 			printf(" (Meal #%d)", philo->c_eat);
 		printf("\n");
 	}
-	sem_post(philo->data->print);
+	sem_post(philo->tab->print);
 }
 
 void	init_table(t_table *tab)
@@ -80,7 +82,7 @@ void	init_table(t_table *tab)
 	while (++i < tab->n_ph)
 	{
 		tab->philos[i].id = i + 1;
-		tab->philos[i].data = tab;
+		tab->philos[i].tab = tab;
 		tab->philos[i].c_eat = 0;
 		if (i + 1 == tab->n_ph)
 			tab->philos[i].r_phi = &tab->philos[0];

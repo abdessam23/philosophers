@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/09 14:42:09 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/11 15:57:47 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/12 14:55:24 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	ft_print(t_philo *philo, char *str)
 	if (!philo->tab->died && !philo->tab->m_eaten)
 	{
 		printf("%d %d %s", t, philo->id, str);
-		if (ft_strcmp(str, "is eating") == 0)
-			printf(" (Meal #%d)", philo->c_eat);
+		if (ft_strcmp(str, "is eating 🍜​") == 0)
+			printf(" #%d", philo->c_eat);
 		printf("\n");
 	}
 	sem_post(philo->tab->print);

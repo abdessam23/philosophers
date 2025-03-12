@@ -2,7 +2,7 @@ NAME = philo
 
 CC = cc 
 
-CFLAGS = -Wall -Wextra -Wextra 
+CFLAGS = -Wall -Wextra -Wextra
 
 RM = rm -rf
 

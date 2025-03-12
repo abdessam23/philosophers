@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 16:42:52 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/11 15:03:18 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/12 11:57:17 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	check_dead(t_table *tab)
 			pthread_mutex_lock(&tab->check);
 			if (get_time() - tab->philos[i].last_eat > (size_t)tab->td)
 			{
-				ft_print(&tab->philos[i], "died");
+				ft_print(&tab->philos[i], "died ✘_✘​");
 				tab->died = 1;
 			}
 			pthread_mutex_unlock(&tab->check);
@@ -47,20 +47,20 @@ void	ft_eat(t_philo *philo)
 
 	tab = philo->data;
 	pthread_mutex_lock(&philo->fork);
-	ft_print(philo, "has taking fork");
+	ft_print(philo, "has taking fork 🍴");
 	if (philo->data->n_ph == 1)
 	{
 		ft_sleep(tab, tab->td);
-		ft_print(philo, "died");
+		ft_print(philo, "died ​✘_✘​");
 		pthread_mutex_unlock(&philo->fork);
 		tab->died = 1;
 		return ;
 	}
 	pthread_mutex_lock(&philo->r_phi->fork);
-	ft_print(philo, "has taking fork");
+	ft_print(philo, "has taking fork 🍴");
 	pthread_mutex_lock(&tab->check);
 	philo->c_eat++;
-	ft_print(philo, "is eating");
+	ft_print(philo, "is eating 🍜​");
 	philo->last_eat = get_time();
 	pthread_mutex_unlock(&tab->check);
 	ft_sleep(tab, tab->te);
@@ -80,9 +80,9 @@ void	*routine(void *arg)
 	while (!tab->died && !tab->m_eaten)
 	{
 		ft_eat(philo);
-		ft_print(philo, "is sleeping");
+		ft_print(philo, "is sleeping 😴​");
 		ft_sleep(tab, tab->ts);
-		ft_print(philo, "is thinking");
+		ft_print(philo, "is thinking 🤔​");
 	}
 	return (NULL);
 }

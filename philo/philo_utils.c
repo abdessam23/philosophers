@@ -6,7 +6,7 @@
 /*   By: abhimi <abhimi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 12:13:59 by abhimi            #+#    #+#             */
-/*   Updated: 2025/03/11 15:03:34 by abhimi           ###   ########.fr       */
+/*   Updated: 2025/03/12 15:17:56 by abhimi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	ft_print(t_philo *philo, char *str)
 	if (!philo->data->died && !philo->data->m_eaten)
 	{
 		printf("%d %d %s", t, philo->id, str);
-		if (ft_strcmp(str, "is eating") == 0)
-			printf(" (Meal #%d)", philo->c_eat);
+		if (ft_strcmp(str, "is eating 🍜​") == 0)
+			printf(" #%d", philo->c_eat);
 		printf("\n");
 	}
 	pthread_mutex_unlock(&philo->data->print);
